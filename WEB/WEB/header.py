@@ -9,7 +9,7 @@ def navbar():
                 pc.image(src="/logo.png", width="50px"),
                 pc.heading("파람 중앙제어 시스템"),
                 pc.flex(
-                    pc.badge("Ver2023.06.001", color_scheme="blue"),
+                    pc.badge("Ver2023.06.002", color_scheme="blue"),
                 ),
             ),
             justify="space-between",
