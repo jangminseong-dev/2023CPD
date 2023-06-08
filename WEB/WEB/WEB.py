@@ -9,35 +9,97 @@ class State(pc.State):
     pass
 
 
-def index() -> pc.Component:
+def index():
     return pc.tablet_and_desktop(
             pc.vstack(
                 navbar(),
-                pc.grid(
-                    pc.box(pc.hstack(pc.heading("MP-001", size="lg"), pc.badge("Connected", color_scheme="green")),
-                            pc.hstack(pc.stat(pc.stat_number("25°C"), pc.stat_help_text("온도")), pc.stat(pc.stat_number("57%"), pc.stat_help_text("습도"))),
-                            pc.hstack(pc.stat(pc.stat_number("1㎛"), pc.stat_help_text("미세먼지")), pc.stat(pc.stat_number("27ppm"), pc.stat_help_text("CO₂"))),
-                            pc.hstack(pc.button(pc.icon(tag="sun")), pc.spacer(), pc.button(pc.icon(tag="settings"), on_click=State.ShowSettings)),
-                            bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
-                            ),
-                    pc.box(pc.hstack(pc.heading("MP-002", size="lg"), pc.badge("Disconnected", color_scheme="red")),
-                            pc.hstack(pc.stat(pc.stat_number("--°C"), pc.stat_help_text("온도")), pc.stat(pc.stat_number("--%"), pc.stat_help_text("습도"))),
-                            pc.hstack(pc.stat(pc.stat_number("--㎛"), pc.stat_help_text("미세먼지")), pc.stat(pc.stat_number("--ppm"), pc.stat_help_text("CO₂"))),
-                            pc.hstack(pc.button(pc.icon(tag="sun")), pc.spacer(), pc.button(pc.icon(tag="settings"))),
-                            bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
-                            ),
-                    pc.box(pc.hstack(pc.heading("MP-003", size="lg"), pc.badge("Disconnected", color_scheme="red")),
-                            pc.hstack(pc.stat(pc.stat_number("--°C"), pc.stat_help_text("온도")), pc.stat(pc.stat_number("--%"), pc.stat_help_text("습도"))),
-                            pc.hstack(pc.stat(pc.stat_number("--㎛"), pc.stat_help_text("미세먼지")), pc.stat(pc.stat_number("--ppm"), pc.stat_help_text("CO₂"))),
-                            pc.hstack(pc.button(pc.icon(tag="sun")), pc.spacer(), pc.button(pc.icon(tag="settings"))),
-                            bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
-                            ),
-                    template_rows="repeat(10, 1fr)",
-                    template_columns="repeat(7, 1fr)",
-                    gap=4,
-                    height="90vh",
-                    width="100%",
-                    padding="10px"
+                pc.center(
+                    pc.grid(
+                        pc.box(pc.hstack(pc.heading("1학년 1반", size="lg"), pc.badge("Connected", color_scheme="green")),
+                                pc.hstack(pc.stat(pc.stat_number("-1823°C"), pc.stat_help_text("온도")), pc.stat(pc.stat_number("99%"), pc.stat_help_text("습도"))),
+                                pc.hstack(pc.stat(pc.stat_number("9872㎛"), pc.stat_help_text("미세먼지")), pc.stat(pc.stat_number("9112ppm"), pc.stat_help_text("CO₂"))),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer(), pc.button(pc.icon(tag="settings"), on_click=State.ShowSettings)),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("1학년 2반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        
+                        pc.box(pc.hstack(pc.heading("1학년 3반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("1학년 4반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("1학년 5반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("2학년 1반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("2학년 2반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("2학년 3반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("2학년 4반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("2학년 5반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("3학년 1반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("3학년 2반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("3학년 3반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("3학년 4반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        pc.box(pc.hstack(pc.heading("3학년 5반", size="lg")),
+                                pc.center(pc.badge("ㅤOFFㅤ", color_scheme="red", font_size="30px", border_color="#822727", border_width=5), w="100%", padding="37px"),
+                                pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer()),
+                                bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+                                ),
+                        
+                        template_rows="repeat(10, 1fr)",
+                        template_columns="repeat(5, 1fr)",
+                        gap=4,
+                        height="90vh",
+                        width="100%",
+                        padding="10px"
+                    ),
                 ),
                 margin_top="78px",
             ),
@@ -69,7 +131,18 @@ def index() -> pc.Component:
                                             ),
                                             pc.button("시간표 수정", margin_top="10px")
                                         ),
-                                    pc.tab_panel(pc.heading("페이지 준비중")),
+                                    pc.tab_panel(
+                                        pc.center(
+                                            pc.hstack(
+                                                pc.hstack(pc.text("볼륨"), pc.slider(w="100px")),
+                                                pc.spacer(),
+                                                pc.hstack(pc.text("음소거"), pc.switch()),
+                                                pc.spacer(),
+                                                pc.hstack(pc.text("재실센서"), pc.switch(is_checked=True)),
+                                                w="60%",
+                                            )
+                                        )
+                                    ),
                                 ),
                             ),
                         ),
@@ -85,5 +158,5 @@ def index() -> pc.Component:
 
 # Add state and page to the app.
 app = pc.App(state=State)
-app.add_page(index)
+app.add_page(index, title="PARAM CCS", image="/logo.png")
 app.compile()
