@@ -16,8 +16,8 @@ def index():
                 pc.center(
                     pc.grid(
                         pc.box(pc.hstack(pc.heading("1학년 1반", size="lg"), pc.badge("Connected", color_scheme="green")),
-                                pc.hstack(pc.stat(pc.stat_number("-1823°C"), pc.stat_help_text("온도")), pc.stat(pc.stat_number("99%"), pc.stat_help_text("습도"))),
-                                pc.hstack(pc.stat(pc.stat_number("9872㎛"), pc.stat_help_text("미세먼지")), pc.stat(pc.stat_number("9112ppm"), pc.stat_help_text("CO₂"))),
+                                pc.hstack(pc.stat(pc.stat_number("25°C"), pc.stat_help_text("온도")), pc.stat(pc.stat_number("62%"), pc.stat_help_text("습도"))),
+                                pc.hstack(pc.stat(pc.stat_number("9㎛"), pc.stat_help_text("미세먼지")), pc.stat(pc.stat_number("523ppm"), pc.stat_help_text("CO₂"))),
                                 pc.hstack(pc.button(pc.image(src="/power.png", width="18px", height="auto")), pc.spacer(), pc.button(pc.icon(tag="settings"), on_click=State.ShowSettings)),
                                 bg="white", w="300px", border_radius="7px", padding="10px", box_shadow="1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06)"
                                 ),
