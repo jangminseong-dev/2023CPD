@@ -51,13 +51,5 @@ void loop()
     }
     else
       Serial.println("Error sending the data");
-    delay(2000);
   }
-  // esp_err_t result = esp_now_send(address, (uint8_t *) &data, sizeof(data));
-
-  // if (result == ESP_OK)
-  //   Serial.println("Sent with success");
-  // else
-  //   Serial.println("Error sending the data");
-  // delay(2000);
 }

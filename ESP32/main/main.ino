@@ -26,11 +26,13 @@ AM1008W_K_I2C air_sensor;
 #define LED_G 192
 #define LED_B 243
 Adafruit_NeoPixel leds(NUM_LEDS, LED_DATA, NEO_GRB + NEO_KHZ800);
-int previous_graph = 0;
+int graph_pointer = 0;
 
 //환기 팬 관련
-#define IN_FAN 36
-#define OUT_FAN 39
+//#define FAN 33
+#define FAN 17
+const int freq = 25000; //Fan PWM Frequency (25KHz)
+const int resolution = 8; //Input Resolution (0~255)
 
 //존재감지센서 관련
 #define HPS_SENSE 34
@@ -121,6 +123,8 @@ void onReceive(const uint8_t * mac, const uint8_t *incomingData, int len)
   {
     ledGraph(arg2);
   }
+  else if (arg1 == "fan")
+    testFan(arg2);
 }
 
 void setup()
@@ -134,6 +138,7 @@ void setup()
   initAirSensor();
   initDuct();
   initLED();
+  initFan();
   Serial.println("Initializing compalte");
 }
 
@@ -230,48 +235,50 @@ void initLED()
   leds.show();
 }
 
-void ledGraph(int percent)
+void ledGraph(int count) //1~28
 {
-  // 3.5에 한칸
-  int pixel_num = percent / 3.5;
+  if (count == -1)
+  {
+    graph_pointer = 0;
+    return;
+  }
+  int move = count - graph_pointer;
   int n = 200;
-  Serial.print(pixel_num);
-  Serial.print(", ");
-  Serial.println(previous_graph);
-  
-  if (previous_graph < pixel_num)
+  if (move > 0)
   {
-    for (int p = previous_graph - 1; p < pixel_num; p++)
+    for (int p = 0; p < move; p++)
     {
       for (int i = 1; i <= n; i++)
       {
-        int r = (int)(((double)LED_R / n) * i);
-        int g = (int)(((double)LED_G / n) * i);
-        int b = (int)(((double)LED_B / n) * i);
-        leds.setPixelColor(p, r, g, b);
+        int r = (int)((((double)LED_R - 255.0) / n) * i);
+        int g = (int)((((double)LED_G - 255.0) / n) * i);
+        int b = (int)((((double)LED_B - 255.0) / n) * i);
+        leds.setPixelColor(graph_pointer, 255 + r, 255 + g, 255 + b);
         leds.show();
-        delayMicroseconds(200);
+        delayMicroseconds(1);
       }
+      graph_pointer++;
     }
   }
-  else if (previous_graph > pixel_num)
+  else if (move < 0)
   {
-    for (int p = previous_graph - 1; p > pixel_num; p--)
+    for (int p = 0; p < (-1 * move); p++)
     {
       for (int i = 1; i <= n; i++)
       {
-        int r = (int)(((double)LED_R / n) * i);
-        int g = (int)(((double)LED_G / n) * i);
-        int b = (int)(((double)LED_B / n) * i);
-        leds.setPixelColor(p, LED_R - r, LED_G - g, LED_B - b);
+        int r = (int)(((255.0 - LED_R) / n) * i);
+        int g = (int)(((255.0 - LED_G) / n) * i);
+        int b = (int)(((255.0 - LED_B) / n) * i);
+        leds.setPixelColor(graph_pointer - 1, LED_R + r, LED_G + g, LED_B + b);
         leds.show();
-        delayMicroseconds(200);
+        delayMicroseconds(1);
       }
+      graph_pointer--;
     }
   }
-  else if (percent == -1)
-    previous_graph = 0;
-  previous_graph = pixel_num;
+  Serial.print(graph_pointer);
+  Serial.print(" / ");
+  Serial.println(move);
 }
 
 void testLED(int flag)
@@ -299,4 +306,16 @@ void testLED(int flag)
     leds.fill(leds.Color(0, 192, 243));
     leds.show();
   }
+}
+
+void initFan()
+{
+  ledcSetup(0, freq, resolution);
+  ledcAttachPin(FAN, 0);
+  ledcWrite(0, 0);
+}
+
+void testFan(int arg)
+{
+  ledcWrite(0, arg);
 }

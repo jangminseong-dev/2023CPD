@@ -1,4 +1,4 @@
-#define FAN1 25
+#define FAN1 5
 
 const int freq = 25000; //Fan PWM Frequency (25KHz)
 const int channel = 0; //ESP32 PWM Channel
