@@ -40,6 +40,8 @@ AM1008W_K_I2C air_sensor; //공기질 센서 객체
 Adafruit_NeoPixel leds(LED_NUMS, LED_DATA, NEO_GRB + NEO_KHZ800); //네오픽셀 LED 객체
 WIRELESS_DATA wl_data; //무선통신 데이터 변수
 int graph_pointer = 0; //네오픽셀 LED 그래프 포인터
+int graph_now = 0;
+String serialData = "";
 
 void onReceive(const uint8_t * mac, const uint8_t *incomingData, int len)
 {
@@ -111,6 +113,16 @@ void onReceive(const uint8_t * mac, const uint8_t *incomingData, int len)
   else if (arg1 == "fan")
   {
     setFanSpeed(arg2);
+  }
+  else if (arg1 == "on")
+  {
+    setLed(0, 0, 0, 255, 255, 255);
+    actuatorControl(2, 4500);
+  }
+  else if (arg1 == "off")
+  {
+    setLed(255, 255, 255, 0, 0, 0);
+    actuatorControl(1, 4650);
   }
 }
 
@@ -270,17 +282,6 @@ void setFanSpeed(int speed)
     ledcWrite(0, speed);
 }
 
-void setup()
-{
-  Serial.begin(115200);
-  WiFi.mode(WIFI_STA);
-  if (esp_now_init() != ESP_OK)
-    Serial.println("Error initializing ESP-NOW");
-  esp_now_register_recv_cb(onReceive);
-
-  initialize();
-}
-
 AIRSENSOR_DATA getAirSensorData()
 {
   //***Example***
@@ -304,7 +305,136 @@ AIRSENSOR_DATA getAirSensorData()
   return data;
 }
 
+void setup()
+{
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  if (esp_now_init() != ESP_OK)
+    Serial.println("Error initializing ESP-NOW");
+  esp_now_register_recv_cb(onReceive);
+
+  initialize();
+}
+
 void loop()
 {
+  while (Serial.available())
+  {
+    char ch = Serial.read();
+    serialData.concat(ch);
+  }
 
+  if (serialData.length() > 0)
+  {
+    //Serial.println(serialData);
+    String str = serialData, arg1 = "";
+    int arg2 = -1, arg3 = -1, arg4 = -1;
+    for (int i = 0; i < 4; i++)
+    {
+      int index = str.indexOf(' ');
+      if (-1 != index)
+      {
+        if (i == 0)
+          arg1 = str.substring(0, index);
+        else if (i == 1)
+          arg2 = str.substring(0, index).toInt();
+        else if (i == 2)
+          arg3 = str.substring(0, index).toInt();
+        str = str.substring(index + 1);
+      }
+      else if (-1 == index && i == 0)
+      {
+        arg1 = str;
+        break;
+      }
+      else if (-1 == index && i == 1)
+      {
+        arg2 = str.substring(0, index).toInt();
+        break;
+      }
+      else if (-1 == index && i == 2)
+      {
+        arg3 = str.substring(0, index).toInt();
+        break;
+      }
+      else
+        arg4 = str.substring(0, index).toInt();
+    }
+
+    if (arg1 == "led")
+    {
+      if (arg2 == -1)
+      {
+        setLed(0, 0, 0, 255, 255, 255);
+      }
+      else if (arg2 == -2)
+      {
+        setLed(255, 255, 255, 0, 0, 0);
+      }
+      else
+      {
+        setLed(255, 255, 255, arg2, arg3, arg4);
+      }
+    }
+    else if (arg1 == "blink")
+    {
+      setLedBlink(255, 72, 72, 2);
+    }
+    else if (arg1 == "graph")
+    {
+      setLedGraph(arg2);
+    }
+    else if (arg1 == "act")
+    {
+      actuatorControl(arg2, arg3);
+    }
+    else if (arg1 == "fan")
+    {
+      setFanSpeed(arg2);
+    }
+    
+    if (arg1[0] == 'O')
+    {
+      setLed(0, 0, 0, 255, 255, 255); //LED 키고
+      actuatorControl(2, 4500); //덕트 열고
+      Serial.println("Turn on");
+    }
+
+    if (arg1[0] == 'F')
+    {
+      setLed(255, 255, 255, 0, 0, 0);
+      actuatorControl(1, 4700); //덕트 열고
+      Serial.println("Turn off");
+    }
+
+    if (arg1[0] == 'D')
+    {
+      //CO2 범위 500~2000
+      AIRSENSOR_DATA temp = getAirSensorData();
+      String send = String((int)temp.temp) + "/" + String((int)temp.humidity) + "/" + String(temp.pm1p0) + "/" + String(temp.co2);
+      Serial.print(send);
+      int graph = map(temp.co2, 500, 2000, 0, 28);
+      if (graph_now != graph)
+      {
+        graph_now = graph;
+        setLedGraph(graph_now);
+      }
+    }
+    serialData = "";
+  }
+
+
+  // while (Serial.available())
+  // {
+  //   char read = Serial.read();
+
+  //   switch (read)
+  //   {
+  //     case 'D':
+  //       AIRSENSOR_DATA temp = getAirSensorData();
+  //       String send = String((int)temp.temp) + "/" + String((int)temp.humidity) + "/" + String(temp.pm1p0) + "/" + String(temp.co2);
+  //       Serial.print(send);
+  //       break;
+  //   }
+  // }
 }

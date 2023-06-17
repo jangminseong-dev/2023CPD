@@ -1,17 +1,14 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
-//1: 7C:9E:BD:05:FC:88
-//2: 10:52:1C:5D:B7:4010
-
-//NEW : 40:22:D8:60:DA:40
+//CC:DB:A7:DB:AD:40
 
 typedef struct WIRELESS_DATA
 {
   char command[50];
 } WIRELESS_DATA;
 
-uint8_t address[] = {0x7C, 0x9E, 0xBD, 0x05, 0xFC, 0x88};
+uint8_t address[] = {0xCC, 0xDB, 0xA7, 0xDB, 0xAD, 0x40};
 esp_now_peer_info_t peerInfo;
 WIRELESS_DATA data;
 
