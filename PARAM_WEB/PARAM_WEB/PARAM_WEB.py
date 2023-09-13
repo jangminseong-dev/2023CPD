@@ -159,5 +159,5 @@ def index():
 
 
 app = pc.App()
-app.add_page(index)
+app.add_page(index, title="PARAM", image="/logo.png", description="Param Center Control System")
 app.compile()
